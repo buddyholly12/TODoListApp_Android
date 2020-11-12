@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "542618656012",
+    "firebase_url": "https://reminder-task.firebaseio.com",
+    "project_id": "reminder-task",
+    "storage_bucket": "reminder-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542618656012:android:3c2dff5521b3575ae3bd29",
+        "android_client_info": {
+          "package_name": "com.example.tugasproyek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542618656012-4pmls68e1r9rl7vmhq00i2dq8rvog6o2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbxZkRN-rV8KB8he3Z3vR8iEOEKcVeBSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542618656012-4pmls68e1r9rl7vmhq00i2dq8rvog6o2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
