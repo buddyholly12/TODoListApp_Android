@@ -1,6 +1,6 @@
 # TODoListApp_Android<br/>
 + Intent
 + firebase
-+ Activity&nbsp;
++ Activity<br>
 Additional App 
 1. Figma UI
