@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.TextView
 
 
@@ -17,11 +18,17 @@ class TaskAdapter(val mctx : Context,val layoutRes: Int , val taskList :List<Tas
         val view: View = layoutInflater.inflate(layoutRes, null)
         val tv_tugas:TextView = view.findViewById(R.id.tv_tugas)
         val tv_detail:TextView =view.findViewById(R.id.tv_detail)
-
+        val tombol_selesai:Button = view.findViewById(R.id.buttonselesai)
+        val tv_date:TextView = view.findViewById(R.id.Tv_date)
         val datatask2=taskList[position]
+
+       /* tombol_selesai.setOnClickListener{
+
+        }*/
 
         tv_tugas.text = datatask2.namatugas
         tv_detail.text = datatask2.detailtugas
+        tv_date.text= datatask2.tanggal1
 
         return  view
     }

@@ -1,16 +1,30 @@
 package com.example.to_do_listapp
 
+import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_new__task.*
+import java.text.SimpleDateFormat
+import java.time.Month
+import java.time.Year
+import java.util.*
 
-class New_Task : AppCompatActivity(),View.OnClickListener  {
+class New_Task : AppCompatActivity(),View.OnClickListener{
     private lateinit var tugas1 : com.google.android.material.textfield.TextInputEditText
     private  lateinit var detailtugas1: EditText
     private  lateinit var addTask:com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    var button_date: ImageButton? = null
+    var textview_date: TextView? = null
+    var cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,16 +34,33 @@ class New_Task : AppCompatActivity(),View.OnClickListener  {
         tugas1= findViewById(R.id.taskreq)
         detailtugas1 = findViewById(R.id.taskreq1)
         addTask = findViewById(R.id.addnewtask)
+//        tvdate = findViewById(R.id.Tv_date)
+
+        button_date = this.Calendars
+        textview_date = this.Tvcalendars
 
         addTask.setOnClickListener(this)
 
+        // when you click on the button, show DatePickerDialog that is set with OnDateSetListener
+        button_date!!.setOnClickListener{
+            configtime()
+        }
+
+
+
+        }
+
+    private fun updateDateInView() {
+        val myFormat = "MM/dd/yyyy" // mention the format you need
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        textview_date!!.text = sdf.format(cal.getTime())
     }
 
-
-
     private fun savedata() {
+
         val tugas = tugas1.text.toString().trim()
         val detTugas = detailtugas1.text.toString().trim()
+        val tanggal = textview_date?.text.toString().trim()
 
         if (tugas.isEmpty())
         {
@@ -43,17 +74,42 @@ class New_Task : AppCompatActivity(),View.OnClickListener  {
         }
         val ref= FirebaseDatabase.getInstance().getReference("Taskdata")
         val taskid = ref.push().key
-        val datatask = Taskdata(taskid,tugas,detTugas)
+        val datatask = Taskdata(taskid,tugas,detTugas,tanggal)
         if (taskid!=null)
         {
             ref.child(taskid).setValue(datatask).addOnCompleteListener{
                 Toast.makeText(applicationContext, "Data ditambahkan ", Toast.LENGTH_SHORT).show()
             }
         }
+
+    }
+    private fun datelistener(): DatePickerDialog.OnDateSetListener? {
+        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
+                                   dayOfMonth: Int) {
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, monthOfYear)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateDateInView()
+            }
+        }
+        return dateSetListener
+    }
+    private fun configtime(){
+        DatePickerDialog(this@New_Task,
+                datelistener(),
+                // set DatePickerDialog to point to today's date when it loads up
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)).show()
+
+
     }
 
     override fun onClick(v: View?) {
         savedata()
+      //  configtime()
     }
+
 
 }

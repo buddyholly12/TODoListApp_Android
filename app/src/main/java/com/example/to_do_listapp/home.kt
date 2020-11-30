@@ -18,6 +18,7 @@ class home : AppCompatActivity(){
 
 private lateinit var taskList: MutableList<Taskdata>
     private lateinit var listTAsk : ListView
+    private lateinit var donebutton : ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +53,9 @@ private lateinit var taskList: MutableList<Taskdata>
             val intent = Intent(this@home,New_Task::class.java)
             startActivity(intent)
         }
+
+
+
     }
 }
 
