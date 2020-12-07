@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.tasklist.*
 
 class home : AppCompatActivity(){
 
@@ -39,7 +40,7 @@ private lateinit var taskList: MutableList<Taskdata>
                         }
 
                     }
-                    val adapter = TaskAdapter(applicationContext,R.layout.tasklist,taskList)
+                    val adapter = TaskAdapter(this@home,R.layout.tasklist,taskList)
                     listTAsk.adapter =adapter
                 }
             }

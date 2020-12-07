@@ -58,7 +58,7 @@
 
 
     <ImageButton
-        android:id="@+id/alarm"
+        android:id="@+id/Ib_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="61dp"
@@ -79,6 +79,8 @@
         app:layout_constraintTop_toBottomOf="@+id/taskreq1"
         app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
 
+
+
     <TextView
         android:id="@+id/Tvcalendars"
         android:layout_width="wrap_content"
@@ -91,14 +93,14 @@
         app:layout_constraintTop_toBottomOf="@+id/Calendars" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/Tv_Alarms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="TextView"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Tvcalendars" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
