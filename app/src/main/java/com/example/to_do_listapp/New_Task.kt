@@ -1,13 +1,11 @@
 package com.example.to_do_listapp
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.DatePickerDialog
-import android.app.PendingIntent
-import android.app.TimePickerDialog
+import android.app.*
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat.is24HourFormat
@@ -30,7 +28,10 @@ class New_Task : AppCompatActivity(),View.OnClickListener{
     private lateinit var tugas1 : com.google.android.material.textfield.TextInputEditText
     private  lateinit var detailtugas1: EditText
     private  lateinit var addTask:com.google.android.material.floatingactionbutton.FloatingActionButton
-
+    private lateinit var notification_builder : Notification.Builder
+    private lateinit var sensor_intent : Intent
+    private val color = Color.RED
+    private val light_color = Color.argb(255, 255, 255, 0)
     var button_date: ImageButton? = null
     var textview_date: TextView? = null
     var cal = Calendar.getInstance()
@@ -38,6 +39,9 @@ class New_Task : AppCompatActivity(),View.OnClickListener{
     var hour: Int = 0
     var minute: Int = 0
     var tvalarms : TextView? =null
+    lateinit var pendingIntent: PendingIntent
+    private lateinit var alarmManager: AlarmManager
+    private val REQUEST_CODE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new__task)
@@ -61,13 +65,32 @@ class New_Task : AppCompatActivity(),View.OnClickListener{
         }
         alarms!!.setOnClickListener{
             configwaktu()
+            Alarm_Manager()
         }
-
+// notif manager
+//        sensor_intent = Intent(this, SensorActivity::class.java)
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//            notification_builder =Notification.Builder(this)
+//                    .setSmallIcon(R.drawable.ic_priority_high_black_24dp)
+//                    .setColor(color)
+//                    .setContentTitle("Welcome to Notification")
+//                    .setContentText("Let's go to Sensor Act")
+//                    .setLights(light_color, 2000, 3000)
+//            notificationManager()
+//        }else {
+//
+//            notification_builder = Notification.Builder(this)
+//                    .setSmallIcon(R.drawable.ic_priority_high_black_24dp)
+//                    .setContentTitle("Welcome to Notification")
+//                    .setContentText("Let's go to Sensor Act")
+//                    .setLights(light_color, 2000, 3000)
+//            notificationManager()
+//        }
 
     }
 
     private fun updateDateInView() {
-        val myFormat = "MM/dd/yyyy" // mention the format you need
+        val myFormat = "dd/MM/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         textview_date!!.text = sdf.format(cal.getTime())
     }
@@ -95,6 +118,7 @@ class New_Task : AppCompatActivity(),View.OnClickListener{
         {
             ref.child(taskid).setValue(datatask).addOnCompleteListener{
                 Toast.makeText(applicationContext, "Data ditambahkan ", Toast.LENGTH_SHORT).show()
+
             }
         }
 
@@ -139,6 +163,28 @@ class New_Task : AppCompatActivity(),View.OnClickListener{
       //  configtime()
     }
 
+//    fun notificationManager(){
+//        val pendingIntent = PendingIntent.getActivity(this@MainActivity, 0, sensor_intent, 0)
+//        notification_builder.setContentIntent(pendingIntent)
+//        val notification = notification_builder.build()
+//        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        notificationManager.notify(99, notification)
+//
+//    }
 
-
+    private fun Alarm_Manager(){
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationManager::class.java)
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 30)
+        pendingIntent = PendingIntent.getBroadcast(this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        alarmManager.setRepeating(
+                AlarmManager.RTC,
+                calendar.timeInMillis,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+        )
+    }
 }

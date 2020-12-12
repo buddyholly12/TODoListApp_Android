@@ -98,10 +98,10 @@ class TaskAdapter(val mctx : Context,val layoutRes: Int , val taskList :List<Tas
   //      Tvcalendars.setText(datatask2.tanggal1)
 
         ib_caledars.setOnClickListener({
-            configtime()
+            configtime1()
         })
         ib_alarm.setOnClickListener({
-            configwaktu()
+            configwaktu1()
         })
 
         builder.setView(view)
@@ -159,7 +159,7 @@ class TaskAdapter(val mctx : Context,val layoutRes: Int , val taskList :List<Tas
         }
         return dateSetListener
     }
-    private fun configtime(){
+    private fun configtime1(){
         DatePickerDialog(mctx,
             datelistener(),
             // set DatePickerDialog to point to today's date when it loads up
@@ -169,7 +169,7 @@ class TaskAdapter(val mctx : Context,val layoutRes: Int , val taskList :List<Tas
 
 
     }
-    private fun configwaktu(){
+    private fun configwaktu1(){
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
